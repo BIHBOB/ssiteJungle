@@ -42,13 +42,13 @@ initAuth(db); // Передаем экземпляр базы данных
 setupAuth(app); // Настраиваем middleware аутентификации
 
 // Логирование запросов
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   const start = Date.now();
   const path = req.path;
   let capturedJsonResponse: Record<string, any> | undefined = undefined;
 
   const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
+  res.json = function (bodyJson: any, ...args: any[]) {
     capturedJsonResponse = bodyJson;
     return originalResJson.apply(res, [bodyJson, ...args]);
   };
@@ -92,7 +92,7 @@ app.use((req, res, next) => {
   }
 
   // Запуск сервера
-  const port = 5000;
+  const port = process.env.PORT || 5000;
   server.listen({
     port,
     host: "0.0.0.0",
