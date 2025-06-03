@@ -1,0 +1,1371 @@
+Техническое задание: Разработка сайта "Jungle Plants"
+1. Общие сведения
+1.1. Наименование проекта
+"Jungle Plants" — веб-приложение для интернет-магазина растений, адаптированное для мобильных устройств (телефоны, планшеты) и ПК, с функциями доставки через CDEK и Почту России (стандартная и экспресс).
+1.2. Назначение проекта
+Создание интернет-магазина для автоматизации продаж растений, управления заказами, обработки платежей и взаимодействия с клиентами. Сайт заменяет функционал Telegram-бота "Jungle Bot", предоставляя минималистичный, стильный и отзывчивый интерфейс с адаптивным дизайном. Проект включает интеграцию с YooMoney (ЮMoney) для оплаты, Telegram-бот для уведомлений и авторизации, а также настраиваемую админ-панель для управления всеми аспектами сайта.
+1.3. Цели проекта
+Предоставить пользователям интуитивный и удобный интерфейс для покупки растений, управления заказами, отзывами и подписками на уведомления.
+
+Обеспечить администраторам гибкую панель для управления товарами, заказами, балансами, рассылками, статистикой продаж и настройками интерфейса.
+
+Гарантировать адаптивность, производительность, безопасность, SEO-оптимизацию и единообразный дизайн.
+
+Реализовать проект в среде Replit с использованием ИИ-редактора, обеспечив корректную работу с первого запуска.
+
+Интегрировать Telegram-бот для уведомлений и рассылок, а также авторизации.
+
+Указать единый контакт: @helen_heinlein
+ (Telegram).
+
+Ссылки на внешние ресурсы:
+Подробное FAQ: https://telegra.ph/CHasto-zadavaemye-voprosy-o-Dzhunglevom-bote-i-zakupke-07-15
+
+Отзывы: https://t.me/junglefeedback
+
+2. Требования к функционалу
+2.1. Основные функции
+Пользовательский функционал:
+Регистрация/вход: email/пароль, OAuth через Google и Telegram, обязательный username (Telegram/Instagram).
+
+Каталог товаров: фильтры, фото, описания, метки ("Нет в наличии", "Скидка").
+
+Корзина: управление товарами, лист ожидания, разделение заказов (в наличии/предзаказ).
+
+Оформление заказов: YooMoney, прямой перевод, редактирование данных после оформления.
+
+Личный кабинет: профиль, история заказов, баланс, транзакции, подписки, отзывы.
+
+Система отзывов: текст, медиа, модерация, синхронизация с https://t.me/junglefeedback.
+
+Подписка на уведомления: Telegram-уведомления о наличии товаров.
+
+FAQ: интегрированная страница с ссылкой на https://telegra.ph/CHasto-zadavaemye-voprosy-o-Dzhunglevom-bote-i-zakupke-07-15.
+
+Административный функционал:
+Управление заказами: статусы, комментарии, просмотр чеков, экспорт в Excel.
+
+Управление товарами: добавление, редактирование, скидки, импорт/экспорт, замена изображений.
+
+Управление пользователями: блокировка, назначение администраторов.
+
+Управление балансами: просмотр, пополнение, списание.
+
+Модерация отзывов: одобрение/отклонение, публикация.
+
+Рассылки: текст, медиа, планирование (email, Telegram).
+
+Настройка Telegram-бота: токен, активация уведомлений.
+
+Управление реквизитами: шаблон для прямых переводов (текст, QR-код).
+
+Статистика продаж: фактическая прибыль (успешные оплаты), потенциальная прибыль (неоплаченные заказы).
+
+Настройка интерфейса: цвета, шрифты, логотип, баннеры, метки.
+
+Адаптивность:
+Полная оптимизация для мобильных устройств и ПК.
+
+Ровный, отзывчивый дизайн с плавными анимациями, настраиваемый через админ-панель.
+
+Контакты:
+Единый контакт: @helen_heinlein
+ (Telegram, отображается в футере, FAQ и личном кабинете).
+
+2.2. Пользовательский функционал
+2.2.1. Регистрация и вход
+Регистрация:
+Поля: ФИО, адрес, телефон, email, пароль, username (обязательный), тип соцсети (Instagram, выпадающий список).
+
+Валидация:
+Email: уникальный, формат user@domain.com.
+
+Пароль: мин. 8 символов, буквы/цифры.
+
+Телефон: формат +7XXXXXXXXXX.
+
+Username: формат username для Instagram.
+
+После регистрации: автоматическая отправка email с подтверждением.
+
+Вход:
+Email/пароль.
+
+OAuth через Google: использование GOOGLE_OAUTH_CLIENT_ID и GOOGLE_OAUTH_CLIENT_SECRET.
+
+Интерфейс:
+Формы: крупные поля (min-height: 48px), желтые кнопки (закругленные, hover: scale 1.05).
+
+Адаптивность: компактные формы на мобильных, полноэкранные на ПК.
+
+Поддержка drag-and-drop для загрузки файлов.
+
+Выпадающий список для соцсети: Instagram (username).
+
+Безопасность:
+Пароли: хеширование (bcrypt).
+
+Username: экранирование для защиты от XSS.
+
+2.2.2. Каталог товаров
+Отображение:
+Поля: название, фото, описание, цена, количество, категория (в наличии/предзаказ).
+
+Метки:
+"Скидка" (желтый бейдж, настраиваемый цвет).
+
+"Без выбора" (серый).
+
+"Растение с фото" (зеленый).
+
+"Нет в наличии" (красный текст, кнопка "Уведомить о наличии").
+
+Товары с quantity=0 и is_available=False доступны для подписки.
+
+Функционал:
+Фильтры: категория, цена, наличие, метки (чекбоксы).
+
+Поиск: по названию (регистронезависимый, автодополнение).
+
+Сортировка: цена (возр./убыв.), название (A-Z/Z-A).
+
+Пагинация (ПК, 12 товаров/страница) или бесконечная прокрутка (мобильные).
+
+Интерфейс:
+Карточки: 300x400px (ПК, 3 колонки), 100% ширины (мобильные, 1 колонка).
+
+Hover-эффект: подъем на 5px, усиление тени.
+
+Фильтры: выпадающее меню (мобильные), фиксированная панель (ПК).
+
+Анимация: fade-in при загрузке карточек.
+
+2.2.3. Корзина
+Функционал:
+Добавление/удаление товаров, изменение количества.
+
+Статусы: в наличии, нет в наличии, в листе ожидания.
+
+Разделение: товары в наличии и предзаказы формируют отдельные заказы.
+
+Доставка:
+Отображение стоимости доставки отдельной строкой для каждого товара.
+Расчет общей стоимости доставки (максимальная из всех товаров в корзине).
+
+Лист ожидания:
+Добавление: при превышении quantity (в наличии, предзаказы типа 1, единичные растения).
+
+Исключение: товары из закупок.
+
+Уведомления: товар в наличии (добавлен в корзину), закончился (email).
+
+Итоговая сумма: с учетом скидок и стоимости доставки, отображается отдельно для каждого заказа.
+
+Интерфейс:
+Таблица: зеленые заголовки, желтые кнопки ("Оформить", "Удалить").
+
+Анимация: всплывающее уведомление при добавлении.
+
+Адаптивность: горизонтальная прокрутка на мобильных, фиксированные заголовки на ПК.
+
+2.2.4. Оформление заказа
+Процесс:
+Шаги: доставка → оплата → вопросы.
+
+Данные доставки: 
+ФИО, адрес, телефон (автозаполнение из профиля).
+Выбор типа доставки (CDEK/Почта России, выпадающий список).
+Выбор скорости доставки (стандартная/экспресс, выпадающий список).
+Информация о стоимости доставки (максимальная из всех товаров в корзине).
+Экспресс-доставка: +20% к базовой стоимости доставки.
+
+Оплата:
+YooMoney:
+Бронирование товара на 15 минут.
+
+Успешная оплата: списание товара, статус paid, добавление в фактическую прибыль.
+
+Неуспех: возврат товара в наличие, уведомление, заказ в потенциальную прибыль.
+
+Прямой перевод:
+Отображение реквизитов: текст + QR-код (PaymentDetails).
+
+Загрузка подтверждения: PNG/JPG, до 5 МБ.
+
+Статус pending_payment, проверка администратором.
+
+Одобрение: зачисление на баланс, статус paid, фактическая прибыль.
+
+Отклонение: отмена, email с причиной, потенциальная прибыль.
+
+Баланс: списание, если средств достаточно, статус paid, фактическая прибыль.
+
+Вопросы: "Нужна ли передержка?" (да/нет), "Нужно ли утепление?" (да/нет).
+
+Чек: PDF, отправка на email, копия в /user_cheques.
+
+Редактирование после оформления:
+Доступно до статуса shipped.
+
+Поля: ФИО, адрес, телефон, передержка, утепление.
+
+Уведомления:
+Пользователь: "Заказ ID:X обновлен" (email).
+
+Администратор: "Пользователь ID:Y обновил заказ ID:X" (email).
+
+Интерфейс:
+Прогресс-бар: зеленый, с шагами.
+
+Форма: крупные поля, желтые кнопки, модальные окна (scale-in) для вопросов.
+
+Подтверждение: PNG/JPG, drag-and-drop, предпросмотр.
+
+Уведомления:
+Email: статус заказа, необходимость подтверждения, результат проверки.
+
+Администратор: email о новом подтверждении.
+
+2.2.5. Личный кабинет
+Вкладки:
+Профиль: ФИО, адрес, телефон, email, username, тип соцсети (редактирование).
+
+Заказы: таблица (ID, товары, статус, сумма, кнопка "Редактировать").
+
+Баланс: текущий баланс, кнопка "Пополнить" (YooMoney/прямой перевод).
+
+Транзакции: таблица (тип, сумма, статус, подтверждение для прямых переводов, ссылка на файл).
+
+Отзывы: форма отправки, список отправленных, ссылка на https://t.me/junglefeedback.
+
+Подписки: таблица (товар, дата подписки, кнопка "Отписаться").
+
+Контакты: @helen_heinlein
+, кнопка "Связаться" (открывает Telegram).
+
+Интерфейс:
+Адаптивная таблица: прокрутка на мобильных, полноэкранная на ПК.
+
+Кнопки: зеленые ("Редактировать"), желтые ("Пополнить"), красные ("Отписаться").
+
+Дизайн: ровный, с едиными отступами (16px), закругленные углы (8px).
+
+Удобство:
+Быстрый доступ ко всем функциям через вкладки.
+
+Автозаполнение данных из профиля.
+
+История транзакций с фильтрами (тип, статус).
+
+2.2.6. Система отзывов
+Функционал:
+Просмотр: лента/галерея опубликованных отзывов.
+
+Форма: текст (до 1000 символов), фото/видео (PNG/JPG/MP4, до 10 МБ).
+
+Отправка на модерацию.
+
+Уведомления: статус отзыва (email/Telegram).
+
+Синхронизация: одобренные отзывы публикуются на сайте и в https://t.me/junglefeedback (через Telegram-бот).
+
+Интерфейс:
+Форма: крупные поля, drag-and-drop для медиа.
+
+Лента: карточки с анимацией (fade-in).
+
+Ссылка: "Все отзывы" → https://t.me/junglefeedback.
+
+2.2.7. FAQ
+Функционал:
+Статичная страница с вопросами/ответами.
+
+Сворачиваемые разделы (аккордеон).
+
+Ссылка: "Подробное FAQ" → https://telegra.ph/CHasto-zadavaemye-voprosy-o-Dzhunglevom-bote-i-zakupke-07-15.
+
+Контакт: @helen_heinlein
+ для вопросов.
+
+Интерфейс:
+Зеленые заголовки, желтые стрелки, анимация раскрытия (0.3s).
+
+Кнопка: "Связаться" (@helen_heinlein
+).
+
+2.2.8. Подписка на уведомления
+Функционал:
+Подписка: товары с is_available=False, кнопка "Уведомить о наличии".
+
+Форма: Telegram username (автозаполнение из профиля, валидация @username).
+
+Уведомления: через Telegram-бот при quantity>0.
+
+Сообщение: "Товар [название] снова в наличии! [ссылка на товар]".
+
+Отписка: в личном кабинете.
+
+Интерфейс:
+Кнопка: желтая, иконка колокольчика (Material Icons).
+
+Форма: компактная, валидация в реальном времени.
+
+Таблица подписок: товар, дата, кнопка "Отписаться" (красная).
+
+Уведомления:
+Email: подтверждение подписки/отписки.
+
+Telegram: подтверждение, уведомления о наличии.
+
+Логирование:
+jungle.log: User ID:X subscribed/unsubscribed to plant ID:Y at [timestamp].
+
+2.3. Административный функционал
+2.3.1. Управление заказами
+Функционал:
+Список: ID, клиент (ID, ФИО, username), товары, статус, сумма, комментарии, чек (прямой перевод).
+
+Изменение статуса: pending, paid, shipped, delivered.
+
+Комментарии: текстовое поле, сохранение в заказе.
+
+Экспорт: Excel (ID, клиент, товары, сумма, статус).
+
+Фильтры: статус, клиент, дата, сумма.
+
+Чек: просмотр в модальном окне (PNG/JPG), скачивание.
+
+Интерфейс:
+Таблица: зеленые заголовки, желтые кнопки ("Изменить статус", "Добавить комментарий").
+
+Адаптивность: прокрутка на мобильных, фиксированные заголовки на ПК.
+
+2.3.2. Управление товарами
+Функционал:
+Добавление/редактирование: название, описание, цена, количество, фото, категория, скидка, метки, стоимость доставки.
+
+Товары с quantity=0: метка "Нет в наличии", отображение в каталоге.
+
+Замена изображения: PNG/JPG, до 2 МБ, архивация старого в /static/uploads/archive.
+
+Скидки: процент/сумма, дата окончания, автоматическое завершение.
+
+Импорт/экспорт: CSV (название, цена, количество, категория, стоимость доставки).
+
+Посты: автоматическое предложение создания поста о новом товаре (текст, фото).
+
+Уведомления: автоматическая отправка подписчикам при quantity>0.
+
+Интерфейс:
+Вкладки: "В наличии", "Нет в наличии", "Все товары".
+
+Форма: поля, drag-and-drop для фото, предпросмотр.
+
+Кнопка: "Отправить уведомления" (желтая).
+
+2.3.3. Управление балансами
+Функционал:
+Просмотр: балансы пользователей (таблица: ID, ФИО, username, сумма).
+
+Пополнение/списание: ручное, с комментарием, логирование.
+
+История транзакций: тип (topup, withdrawal, refund, direct_transfer), сумма, статус, подтверждение.
+
+Интерфейс:
+Таблица: зеленые заголовки, желтые кнопки ("Пополнить", "Списать").
+
+Фильтры: пользователь, тип транзакции, дата.
+
+2.3.4. Модерация отзывов
+Функционал:
+Список: текст, медиа, статус (pending, approved, rejected), пользователь.
+
+Одобрение/отклонение: комментарий, публикация на сайте и в https://t.me/junglefeedback.
+
+Логирование: admin_actions.log.
+
+Интерфейс:
+Таблица: кнопки "Одобрить" (зеленая), "Отклонить" (красная).
+
+Предпросмотр медиа: модальное окно.
+
+2.3.5. Рассылки
+Функционал:
+Создание: текст (markdown), фото/видео (до 10 МБ).
+
+Планирование: дата/время (календарь).
+
+Отправка: email (всем пользователям), Telegram (подписчикам).
+
+Предпросмотр: перед отправкой.
+
+Интерфейс:
+Форма: текстовое поле, загрузка медиа, календарь.
+
+Кнопка: "Запланировать" (желтая).
+
+2.3.6. Управление неоплаченными заказами
+Функционал:
+Удаление: все неоплаченные или только для товаров в наличии.
+
+Уведомления: email/Telegram пользователю.
+
+Интерфейс:
+Кнопка: "Удалить неоплаченные" (красная, подтверждение в модальном окне).
+
+2.3.7. Управление пользователями
+Функционал:
+Блокировка: статус blocked, запрет входа, оформления заказов, отзывов.
+
+Разблокировка: статус active.
+
+Назначение администраторов: только главный администратор (MAIN_ADMIN_IDS).
+
+Логирование: admin_actions.log.
+
+Интерфейс:
+Таблица: ID, ФИО, email, username, статус, роль.
+
+Кнопки: "Заблокировать/Разблокировать" (желтые), "Назначить/Снять админа" (зеленые).
+
+Модальные окна: подтверждение действий.
+
+2.3.8. Управление реквизитами для прямых переводов
+Функционал:
+Шаблон: текст (markdown/HTML), QR-код (PNG/JPG, до 2 МБ).
+
+Сохранение: таблица PaymentDetails.
+
+Редактирование/удаление, логирование.
+
+Интерфейс:
+Форма: текстовое поле, загрузка QR-кода, предпросмотр.
+
+Кнопки: "Сохранить" (зеленая), "Очистить" (красная).
+
+2.3.9. Управление Telegram-ботом
+Функционал:
+Настройка: токен, активация/деактивация.
+
+Проверка токена: запрос к Telegram API.
+
+Сохранение: таблица TelegramBot.
+
+Логика бота:
+Уведомления: статусы заказов, наличие товаров, отзывы, рассылки.
+
+Команды: /start (приветствие, ссылка на сайт), /help (контакт @helen_heinlein
+).
+
+Отправка: асинхронная, через python-telegram-bot.
+
+Интерфейс:
+Форма: поле для токена, переключатель "Включить/Выключить", кнопка "Сохранить".
+
+Статус: "Бот активен" (зеленый), "Бот не настроен" (красный).
+
+2.3.10. Статистика продаж
+Функционал:
+Фактическая прибыль: сумма успешных оплат (paid заказы, YooMoney/прямой перевод/баланс).
+
+Потенциальная прибыль: сумма неоплаченных заказов (pending, pending_payment).
+
+Графики: продажи по дням/неделям/месяцам (библиотека Chart.js).
+
+Таблица: топ-5 товаров (по количеству продаж, сумме).
+
+Экспорт данных:
+Форматы: Excel (XLSX).
+Категории: заказы, пользователи, статистика.
+Кнопки экспорта в соответствующих разделах админ-панели.
+Отдельная страница "Экспорт отчетов" со всеми доступными выгрузками.
+
+Фильтры: период, категория, метод оплаты.
+
+Интерфейс:
+Дашборд: графики (линейные, круговые), таблицы.
+
+Кнопки: "Экспорт в Excel" (статистика), "Обновить" (желтые).
+
+Адаптивность: компактные графики на мобильных, полноэкранные на ПК.
+
+2.3.11. Настройка интерфейса
+Функционал:
+Цвета: основной, акцентный, фон, текст (цветоподборщик).
+
+Шрифты: выбор из Google Fonts (Poppins, Roboto, Open Sans).
+
+Логотип: загрузка PNG/JPG, до 1 МБ.
+
+Баннеры: главная страница, каталог (до 5 МБ).
+
+Метки: текст, цвет, иконка (Material Icons).
+
+Сохранение: таблица InterfaceSettings.
+
+Интерфейс:
+Форма: цветоподборщик, выпадающие списки, загрузка файлов.
+
+Предпросмотр: в реальном времени.
+
+Кнопка: "Сохранить" (зеленая).
+
+2.4. Логика наличия и возвратов
+Снятие товара:
+YooMoney: бронирование на 15 минут, списание при успехе, возврат при провале.
+
+Прямой перевод: без бронирования до одобрения.
+
+Лист ожидания:
+Добавление: при превышении quantity (в наличии, предзаказы типа 1, единичные растения).
+
+Уведомления: товар в наличии (корзина), закончился (email/Telegram).
+
+Возвраты:
+Уменьшение количества: возврат последним оплатившим (на баланс или перевод).
+
+Удаление товара: зачисление на баланс, выбор (оставить/вернуть).
+
+Прямой перевод: при отклонении — форма возврата (телефон, текст: "банковские реквизиты неудобны").
+
+Уведомления:
+Email/Telegram: статус заказа, возврат, наличие.
+
+Администратор: email о возвратах.
+
+3. Технические требования
+3.1. Архитектура
+Backend: Python 3.10, Flask.
+
+Frontend: HTML/CSS/JavaScript, Bootstrap 5, Jinja2.
+
+База данных: SQLite (Plants.db), SQLAlchemy.
+
+Интеграции:
+YooMoney: SDK pyyookassa.
+
+Google OAuth: authlib.
+
+Telegram: python-telegram-bot.
+
+Email: SMTP (Gmail).
+
+Push-уведомления: Firebase (опционально).
+
+Графики: Chart.js.
+
+Хранение файлов:
+Фото/видео: /static/uploads.
+
+Чеки: /static/uploads/proofs.
+
+QR-коды: /static/uploads/payment.
+
+Архив изображений: /static/uploads/archive.
+
+Логотип/баннеры: /static/uploads/interface.
+
+Резервные копии: /backup.
+
+3.2. Структура проекта
+
+jungle_plants/
+├── app/
+│   ├── static/
+│   │   ├── css/           # Bootstrap + кастомные стили
+│   │   ├── js/            # Vanilla JS, HTMX, Chart.js
+│   │   └── uploads/
+│   │       ├── payment/   # QR-коды
+│   │       ├── proofs/    # Подтверждения переводов
+│   │       ├── archive/   # Архив изображений
+│   │       └── interface/ # Логотип, баннеры
+│   ├── templates/
+│   │   ├── base.html      # Базовый шаблон
+│   │   ├── index.html     # Главная
+│   │   ├── catalog.html   # Каталог
+│   │   ├── cart.html      # Корзина
+│   │   ├── account.html   # Личный кабинет
+│   │   ├── subscriptions.html  # Подписки
+│   │   ├── direct_transfer.html  # Прямой перевод
+│   │   ├── admin/
+│   │   │   ├── users.html  # Управление пользователями
+│   │   │   ├── payment_details.html  # Реквизиты
+│   │   │   ├── telegram_bot.html  # Telegram-бот
+│   │   │   ├── stats.html  # Статистика
+│   │   │   └── interface.html  # Настройка интерфейса
+│   │   └── faq.html       # FAQ
+│   ├── models/
+│   │   ├── user.py
+│   │   ├── plant.py
+│   │   ├── order.py
+│   │   ├── balance.py
+│   │   ├── feedback.py
+│   │   ├── waitlist.py
+│   │   ├── payment_details.py
+│   │   ├── subscriptions.py
+│   │   ├── telegram_bot.py
+│   │   └── interface_settings.py
+│   ├── routes/
+│   │   ├── user.py
+│   │   ├── admin.py
+│   │   ├── payment.py
+│   │   ├── feedback.py
+│   │   ├── user_management.py
+│   │   ├── direct_transfer.py
+│   │   ├── subscriptions.py
+│   │   ├── telegram_bot.py
+│   │   └── interface.py
+│   ├── services/
+│   │   ├── user_service.py
+│   │   ├── admin_service.py
+│   │   ├── payment_service.py
+│   │   ├── feedback_service.py
+│   │   ├── user_management_service.py
+│   │   ├── direct_transfer_service.py
+│   │   ├── subscriptions_service.py
+│   │   ├── telegram_service.py
+│   │   └── stats_service.py
+│   ├── utils/
+│   │   ├── database.py
+│   │   ├── excel_utils.py
+│   │   ├── payments.py
+│   │   └── charts.py
+│   ├── config.py          # Конфигурация
+│   └── app.py             # Главный файл
+├── backup/                # Резервные копии
+├── user_cheques/          # PDF-чеки
+├── Plants.db              # База данных
+├── requirements.txt       # Зависимости
+└── README.md              # Документация
+
+3.3. База данных
+Users:
+id (integer, primary key).
+
+name (string).
+
+address (string).
+
+phone (string).
+
+email (string, unique).
+
+password_hash (string).
+
+username (string, unique).
+
+social_network (enum: instagram).
+
+status (enum: active, blocked, default: active).
+
+is_admin (boolean, default: False).
+
+Plants:
+id (integer, primary key).
+
+name (string).
+
+description (text).
+
+price (float).
+
+quantity (integer).
+
+photo (string).
+
+category (enum: in_stock, preorder).
+
+discount (float, nullable).
+
+discount_end_date (datetime, nullable).
+
+is_available (boolean, default: True).
+
+deliveryPrice (float, default: 0).
+
+Orders:
+id (integer, primary key).
+
+user_id (integer, foreign key).
+
+items (JSON).
+
+quantity (integer).
+
+total_amount (float).
+
+status (enum: pending, pending_payment, paid, shipped, delivered).
+
+payment_method (enum: yoomoney, balance, direct_transfer).
+
+holding (boolean).
+
+insulation (boolean).
+
+payment_proof (string, nullable).
+
+deliveryType (enum: cdek, russian_post).
+
+deliverySpeed (enum: express, standard).
+
+deliveryAmount (float).
+
+Users_Balance:
+user_id (integer, foreign key).
+
+amount (float).
+
+Balance_Transactions:
+id (integer, primary key).
+
+user_id (integer, foreign key).
+
+amount (float).
+
+type (enum: topup, withdrawal, refund, direct_transfer).
+
+status (enum: pending, approved, rejected).
+
+proof_file (string, nullable).
+
+timestamp (datetime).
+
+Feedback:
+id (integer, primary key).
+
+user_id (integer, foreign key).
+
+text (text).
+
+media (string).
+
+status (enum: pending, approved, rejected).
+
+Waitlist:
+id (integer, primary key).
+
+user_id (integer, foreign key).
+
+plant_id (integer, foreign key).
+
+quantity (integer).
+
+timestamp (datetime).
+
+PaymentDetails:
+id (integer, primary key).
+
+details (text).
+
+qr_code (string).
+
+updated_at (datetime).
+
+updated_by (integer, foreign key).
+
+Subscriptions:
+id (integer, primary key).
+
+user_id (integer, foreign key).
+
+plant_id (integer, foreign key).
+
+subscribed_at (datetime).
+
+InterfaceSettings:
+id (integer, primary key).
+
+primary_color (string, #HEX).
+
+accent_color (string, #HEX).
+
+background_color (string, #HEX).
+
+text_color (string, #HEX).
+
+font (string).
+
+logo (string).
+
+banners (JSON, пути к файлам).
+
+labels (JSON, текст/цвет/иконка).
+
+updated_at (datetime).
+
+updated_by (integer, foreign key).
+
+3.4. Конфигурация
+config.py:
+SQLALCHEMY_DATABASE_URI: путь к Plants.db.
+
+YOOMONEY_SHOP_ID, YOOMONEY_SECRET_KEY.
+
+GOOGLE_OAUTH_CLIENT_ID, GOOGLE_OAUTH_CLIENT_SECRET.
+
+TELEGRAM_API_URL: https://api.telegram.org.
+
+SMTP_*: настройки Gmail.
+
+UPLOAD_FOLDER: /static/uploads.
+
+UPLOAD_PROOFS_FOLDER: /static/uploads/proofs.
+
+UPLOAD_PAYMENT_FOLDER: /static/uploads/payment.
+
+UPLOAD_ARCHIVE_FOLDER: /static/uploads/archive.
+
+UPLOAD_INTERFACE_FOLDER: /static/uploads/interface.
+
+CHEQUES_FOLDER: /user_cheques.
+
+BACKUP_FOLDER: /backup.
+
+ADMIN_IDS: список ID администраторов.
+
+MAIN_ADMIN_IDS: ID главных администраторов.
+
+SECRET_KEY: для сессий.
+
+MAX_PROOF_SIZE: 5 МБ.
+
+MAX_QR_SIZE: 2 МБ.
+
+MAX_LOGO_SIZE: 1 МБ.
+
+MAX_BANNER_SIZE: 5 МБ.
+
+4. Требования к интерфейсу
+4.1. Общие принципы
+Дизайн: Современный, минималистичный, ровный, с тематикой растений.
+Цветовая палитра (настраиваемая):
+Основной: зеленый (#2E7D32).
+
+Акцентный: желтый (#FDD835).
+
+Фон: светло-серый (#F5F5F5).
+
+Текст: темно-серый (#424242).
+
+Шрифты (настраиваемые):
+Основной: Poppins (заголовки, текст).
+
+Дополнительный: Roboto (мелкие элементы).
+
+Иконки: Material Icons (листья, горшки, колокольчики).
+
+Анимации:
+Hover: увеличение кнопок/иконок на 10%, переход 0.3s.
+
+Загрузка: fade-in для карточек, scale-in для модальных окон.
+
+Меню: slide-in для гамбургера.
+
+Отступы и выравнивание:
+Единые отступы: 16px (между элементами, внутри карточек).
+
+Закругленные углы: 8px (кнопки, карточки, таблицы).
+
+Адаптивность:
+Мобильные: гамбургер-меню, крупные кнопки (min-height: 48px), шрифт 16px+.
+
+ПК: боковое меню, сетка товаров (3 колонки), фиксированные таблицы.
+
+Доступность:
+Контрастность: 4.5:1 (WCAG 2.1).
+
+ARIA-метки для форм, кнопок, таблиц.
+
+Семантическая разметка: <header>, <nav>, <main>, <footer>.
+
+4.2. Пользовательский интерфейс
+Главная:
+Баннер: полноэкранное изображение джунглей (настраиваемое), текст "Jungle Plants — твой зеленый мир!" (Poppins, 36px, белый с тенью).
+
+Кнопка CTA: "В каталог" (желтая, hover: scale 1.05).
+
+Карусель: популярные товары, fade-in, Material Icons для навигации.
+
+Футер: контакт @helen_heinlein
+, ссылки на FAQ и отзывы.
+
+Каталог:
+Карточки: фото, название (18px), цена (зеленый), метки (настраиваемые).
+
+Hover: подъем на 5px, усиление тени.
+
+Фильтры: выпадающее меню (мобильные), панель (ПК).
+
+Кнопка "Уведомить о наличии": желтая, иконка колокольчика.
+
+Корзина:
+Таблица: зеленые заголовки, желтые кнопки ("Оформить", "Удалить").
+
+Анимация: всплывающее уведомление.
+
+Сумма: выделена жирным, зеленым.
+
+Личный кабинет:
+Вкладки: профиль, заказы, баланс, транзакции, отзывы, подписки, контакты.
+
+Таблицы: прокрутка (мобильные), полноэкранные (ПК).
+
+Кнопки: зеленые ("Редактировать"), желтые ("Пополнить"), красные ("Отписаться").
+
+Контакты: @helen_heinlein
+, кнопка "Связаться".
+
+Оформление заказа:
+Прогресс-бар: зеленый, с шагами (доставка, оплата, вопросы).
+
+Форма: крупные поля, модальные окна (scale-in).
+
+Подтверждение: drag-and-drop, предпросмотр.
+
+FAQ:
+Аккордеон: зеленые заголовки, желтые стрелки, анимация раскрытия.
+
+Ссылка: "Подробное FAQ" (внешняя).
+
+Контакт: @helen_heinlein
+.
+
+Отзывы:
+Лента: карточки с анимацией (fade-in).
+
+Форма: крупные поля, drag-and-drop.
+
+Ссылка: "Все отзывы" (внешняя).
+
+4.3. Административный интерфейс
+Меню:
+Боковое (ПК): зеленый фон, белые иконки, hover: желтый.
+
+Гамбургер (мобильные): slide-in, желтые пункты.
+
+Управление товарами:
+Вкладки: "В наличии", "Нет в наличии", "Все товары".
+
+Форма: drag-and-drop для фото, предпросмотр.
+
+Кнопка: "Отправить уведомления" (желтая, Telegram-иконка).
+
+Управление пользователями:
+Таблица: зеленые заголовки, желтые/зеленые кнопки.
+
+Модальные окна: fade-in.
+
+Статистика продаж:
+Дашборд: графики (Chart.js), таблицы.
+
+Кнопки: "Экспорт" (желтая), "Обновить" (зеленая).
+
+Настройка интерфейса:
+Форма: цветоподборщик, выпадающие списки, загрузка файлов.
+
+Предпросмотр: в реальном времени.
+
+Настройка Telegram-бота:
+Форма: зеленое поле, желтый переключатель, кнопка "Сохранить".
+
+Просмотр чека:
+Модальное окно: изображение, кнопки "Скачать" (зеленая), "Закрыть" (красная).
+
+5. Безопасность
+Аутентификация:
+Хеширование паролей (bcrypt).
+
+Проверка подписи Telegram OAuth.
+
+Права доступа:
+Middleware: проверка is_admin, status.
+
+Заблокированные пользователи: доступ только к странице поддержки (@helen_heinlein
+).
+
+SQL-инъекции: Экранирование через SQLAlchemy.
+
+XSS: Экранирование username, текстов (Jinja2 safe-фильтр).
+
+Файлы:
+Проверка формата/размера (PIL).
+
+Уникальные имена (UUID).
+
+Конфиденциальность:
+Шифрование токенов (YooMoney, Telegram, bcrypt).
+
+Секреты: config.py или Replit Secrets.
+
+Резервное копирование:
+Ежедневное копирование Plants.db в /backup.
+
+Логирование копирования: backup.log.
+
+6. Технические детали реализации
+6.1. Хранение данных
+База данных: SQLite (Plants.db).
+
+Файлы:
+Фото/видео: /static/uploads.
+
+Чеки: /static/uploads/proofs.
+
+QR-коды: /static/uploads/payment.
+
+Архив: /static/uploads/archive.
+
+Логотип/баннеры: /static/uploads/interface.
+
+Резервные копии: /backup.
+
+6.2. Логирование
+jungle.log:
+Ошибки, подписки, изменения заказов, транзакции.
+
+Пример: User ID:X subscribed to plant ID:Y at 2025-04-21 12:00:00.
+
+admin_actions.log:
+Блокировка, назначение админов, реквизиты, Telegram-бот, интерфейс.
+
+Пример: Admin ID:X blocked user ID:Y at 2025-04-21 12:00:00.
+
+debug.log: отладка.
+
+backup.log: резервное копирование.
+
+6.3. Обработка исключений
+БД: откат транзакций, уведомление админов (email).
+
+YooMoney/Telegram: повторные попытки (3 раза), логирование.
+
+Сервер: страницы 404, 500 с контактом @helen_heinlein
+.
+
+Пользовательские ошибки:
+Неверный username: "Укажите корректный @username
+".
+
+Неверный токен: "Токен Telegram недействителен".
+
+6.4. Обработка больших списков
+Пагинация: 50 записей/страница (пользователи, товары, заказы, подписки).
+
+Ленивая загрузка: изображения, отзывы, списки.
+
+Кэширование: шаблоны, подписки, статистика (Flask-Caching).
+
+7. Требования к разработке
+Фреймворк: Flask.
+
+Модульность: маршруты, модели, сервисы, утилиты.
+
+Документация:
+Комментарии в коде (PEP 8).
+
+README.md: установка, настройка, Telegram-бот, интерфейс.
+
+Тестирование:
+Адаптивность: мобильные (iOS/Android), ПК (Chrome, Firefox).
+
+Интеграции: YooMoney, Google, Telegram.
+
+Нагрузка: 1000+ пользователей, 5000+ товаров.
+
+Безопасность: SQL-инъекции, XSS, переполнение буфера.
+
+Принципы:
+Минимализм: только необходимые функции.
+
+Простота: интуитивный код и UX.
+
+Удобство: приоритет для пользователей и админов.
+
+8. Дополнительные требования
+SEO:
+Мета-теги: товары, баланс, "Нет в наличии" (например, "Купить [название] — Jungle Plants").
+
+Динамическая карта сайта (включая товары с is_available=False).
+
+ALT-текст для изображений.
+
+Производительность:
+Ленивая загрузка: изображения, отзывы, графики.
+
+Асинхронная обработка: загрузка файлов, уведомления (Flask-Executor).
+
+Кэширование: шаблоны (24 часа), статистика (1 час).
+
+Уведомления:
+Email: статусы заказов, подписки, возвраты, отзывы.
+
+Telegram: заказы, наличие, рассылки, отзывы.
+
+Push: Firebase (опционально).
+
+Автоматизация:
+Резервное копирование: ежедневно, 00:00 UTC.
+
+Завершение скидок: по discount_end_date.
+
+Удаление неподтвержденных переводов: через 72 часа, уведомление.
+
+Удаление устаревших подписок: через 30 дней, уведомление.
+
+Интеграция с Telegram-каналом:
+Лента постов о товарах: текст, фото, ссылка (на сайте).
+
+Удаление постов о предзаказах: при quantity=0.
+
+Публикация отзывов: через Telegram-бот в https://t.me/junglefeedback.
+
+9. Пример реализации ключевых компонентов
+9.1. Модель Telegram-бота (app/models/telegram_bot.py)
+python
+
+from app import db
+from datetime import datetime
+
+class TelegramBot(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    token = db.Column(db.String(100), nullable=False)
+    is_active = db.Column(db.Boolean, default=False)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_by = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+9.2. Модель настроек интерфейса (app/models/interface_settings.py)
+python
+
+from app import db
+from datetime import datetime
+
+class InterfaceSettings(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    primary_color = db.Column(db.String(7), default='#2E7D32')
+    accent_color = db.Column(db.String(7), default='#FDD835')
+    background_color = db.Column(db.String(7), default='#F5F5F5')
+    text_color = db.Column(db.String(7), default='#424242')
+    font = db.Column(db.String(50), default='Poppins')
+    logo = db.Column(db.String(255), nullable=True)
+    banners = db.Column(db.JSON, nullable=True)
+    labels = db.Column(db.JSON, nullable=True)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_by = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+9.3. Маршрут Telegram OAuth (app/routes/user.py)
+python
+
+from flask import Blueprint, redirect, url_for, request
+from flask_login import login_user
+from telegram import Bot
+from app import db
+from app.models.user import User
+from app.config import TELEGRAM_BOT_TOKEN
+
+bp = Blueprint('auth', __name__)
+
+@bp.route('/login/telegram/callback')
+def telegram_callback():
+    data = request.args.get('data')  # Telegram OAuth data
+    bot = Bot(token=TELEGRAM_BOT_TOKEN)
+    user_data = bot.get_me()  # Валидация подписи
+    telegram_id = user_data['id']
+    user = User.query.filter_by(telegram_id=telegram_id).first()
+    if not user:
+        user = User(
+            email=f'telegram_{telegram_id}@jungleplants.ru',
+            name=user_data.get('first_name', ''),
+            telegram_id=telegram_id,
+            username=user_data.get('username', ''),
+            social_network='telegram',
+            password_hash=''  # Без пароля
+        )
+        db.session.add(user)
+        db.session.commit()
+    login_user(user)
+    return redirect(url_for('index'))
+
+9.4. Сервис уведомлений (app/services/telegram_service.py)
+python
+
+from telegram import Bot
+from app.models.telegram_bot import TelegramBot
+from app.models.user import User
+import logging
+
+async def send_notification(user_id, message):
+    bot_config = TelegramBot.query.filter_by(is_active=True).first()
+    if not bot_config:
+        logging.error("No active Telegram bot configured")
+        return False
+    bot = Bot(token=bot_config.token)
+    user = User.query.get(user_id)
+    if user.username and user.social_network == 'telegram':
+        try:
+            await bot.send_message(chat_id=user.username, text=message)
+            logging.info(f"Notification sent to user ID:{user_id} ({user.username})")
+            return True
+        except Exception as e:
+            logging.error(f"Failed to send notification to {user.username}: {str(e)}")
+    return False
+
+9.5. Сервис статистики и экспорта (app/services/stats_service.py)
+python
+
+from app.models.order import Order
+from app.models.plant import Plant
+from sqlalchemy import func
+from datetime import datetime, timedelta
+import xlsx  # библиотека для работы с Excel
+
+def get_sales_stats(start_date=None, end_date=None):
+    if not start_date:
+        start_date = datetime.utcnow() - timedelta(days=30)
+    if not end_date:
+        end_date = datetime.utcnow()
+    
+    # Фактическая прибыль (с учетом доставки)
+    actual_profit = Order.query.filter(
+        Order.status == 'paid',
+        Order.created_at.between(start_date, end_date)
+    ).with_entities(func.sum(Order.total_amount + Order.deliveryAmount)).scalar() or 0
+    
+    # Потенциальная прибыль
+    potential_profit = Order.query.filter(
+        Order.status.in_(['pending', 'pending_payment']),
+        Order.created_at.between(start_date, end_date)
+    ).with_entities(func.sum(Order.total_amount + Order.deliveryAmount)).scalar() or 0
+    
+    # Топ-5 товаров
+    top_plants = Plant.query.join(Order).filter(
+        Order.status == 'paid',
+        Order.created_at.between(start_date, end_date)
+    ).group_by(Plant.id).order_by(func.sum(Order.quantity).desc()).limit(5).all()
+    
+    return {
+        'actual_profit': actual_profit,
+        'potential_profit': potential_profit,
+        'top_plants': [{'id': p.id, 'name': p.name, 'sales': p.quantity} for p in top_plants]
+    }
+
+def export_orders_to_excel(orders):
+    # Создаем новую книгу Excel
+    workbook = xlsx.Workbook()
+    sheet = workbook.add_worksheet('Заказы')
+    
+    # Заголовки
+    headers = ['ID', 'Пользователь', 'Дата', 'Сумма', 'Доставка', 'Статус', 'Тип доставки', 'Скорость']
+    for col, header in enumerate(headers):
+        sheet.write(0, col, header)
+    
+    # Данные
+    for row, order in enumerate(orders, start=1):
+        sheet.write(row, 0, order.id)
+        sheet.write(row, 1, order.user.email)
+        sheet.write(row, 2, order.created_at.strftime('%d.%m.%Y'))
+        sheet.write(row, 3, order.total_amount)
+        sheet.write(row, 4, order.deliveryAmount)
+        sheet.write(row, 5, order.status)
+        sheet.write(row, 6, order.deliveryType)
+        sheet.write(row, 7, order.deliverySpeed)
+    
+    # Сохраняем файл
+    buffer = xlsx.save_virtual_workbook(workbook)
+    return buffer
+
+def export_users_to_excel(users):
+    # Аналогичная логика для экспорта пользователей
+    pass
+
+def export_stats_to_excel(stats):
+    # Аналогичная логика для экспорта статистики
+    pass
+
+9.6. CSS (app/static/css/style.css)
+css
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #F5F5F5;
+    color: #424242;
+    margin: 0;
+    padding: 16px;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.btn-primary {
+    background-color: #FDD835;
+    border-color: #FDD835;
+    color: #424242;
+    border-radius: 8px;
+    padding: 12px 24px;
+    transition: transform 0.3s, background-color 0.3s;
+}
+.btn-primary:hover {
+    transform: scale(1.05);
+    background-color: #FFC107;
+}
+.product-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    transition: transform 0.3s;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th {
+    background-color: #2E7D32;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+@media (max-width: 768px) {
+    table {
+        overflow-x: auto;
+        display: block;
+    }
+}
+
+10. Улучшения ТЗ
+Полная логика:
+Регистрация: обязательный username, выбор соцсети.
+
+Оплата: YooMoney, прямой перевод, баланс, учет в статистике.
+
+Telegram-бот: уведомления, рассылки, отзывы.
+
+Статистика: фактическая/потенциальная прибыль, графики.
+
+Интерфейс:
+Ровный дизайн: единые отступы, закругленные углы.
+
+Настраиваемость: цвета, шрифты, логотип, баннеры.
+
+Отзывчивость: оптимизация для всех устройств.
+
+Интеграции:
+FAQ: https://telegra.ph/CHasto-zadavaemye-voprosy-o-Dzhunglevom-bote-i-zakupke-07-15.
+
+Отзывы: https://t.me/junglefeedback.
+
+Контакт: @helen_heinlein
+.
+
+Безопасность:
+Шифрование, экранирование, middleware.
+
+Ограничение доступа для заблокированных пользователей.
+
+Производительность:
+Асинхронная обработка, кэширование, ленивая загрузка.
